@@ -6,7 +6,7 @@
 /*   By: kaisobe <kaisobe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 06:29:40 by kaisobe           #+#    #+#             */
-/*   Updated: 2025/02/18 09:53:10 by kaisobe          ###   ########.fr       */
+/*   Updated: 2025/02/19 06:44:51 by kaisobe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char *argv[])
 
 	if (!is_valid_arg(argc, argv))
 	{
-		ft_dprintf(STDERR_FILENO, "invalid arg\n");
+		write(STDERR_FILENO, "invalid arg\n", ft_strlen("invalid arg\n"));
 		return (EXIT_FAILURE);
 	}
 	info = new_info(argc, argv);

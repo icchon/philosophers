@@ -6,7 +6,7 @@
 /*   By: kaisobe <kaisobe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 21:08:38 by kaisobe           #+#    #+#             */
-/*   Updated: 2025/02/19 14:05:12 by kaisobe          ###   ########.fr       */
+/*   Updated: 2025/02/19 18:50:18 by kaisobe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,31 +25,32 @@
 
 #include "philosophers.h"
 
-static void	release_left_fork(t_philosopher *philosopher)
+static int	release_left_fork(t_philosopher *philosopher)
 {
 	pthread_mutex_unlock(&philosopher->left_fork->mutex);
-	return ;
+	return (1);
 }
-// print_log(philosopher, "release a left fork\n");
 
-static void	release_right_fork(t_philosopher *philosopher)
+static int	release_right_fork(t_philosopher *philosopher)
 {
 	pthread_mutex_unlock(&philosopher->right_fork->mutex);
-	return ;
+	return (1);
 }
-// print_log(philosopher, "release a right fork\n");
 
-void	release_forks(t_philosopher *philosopher)
+int	release_forks(t_philosopher *philosopher)
 {
+	int	res;
+
+	res = 0;
 	if (philosopher->id % 2 == 1)
 	{
-		release_right_fork(philosopher);
-		release_left_fork(philosopher);
+		res = release_right_fork(philosopher);
+		res &= release_left_fork(philosopher);
 	}
 	else
 	{
-		release_left_fork(philosopher);
-		release_right_fork(philosopher);
+		res = release_left_fork(philosopher);
+		res &= release_right_fork(philosopher);
 	}
-	return ;
+	return (res);
 }

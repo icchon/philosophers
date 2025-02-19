@@ -6,7 +6,7 @@
 /*   By: kaisobe <kaisobe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:55:35 by kaisobe           #+#    #+#             */
-/*   Updated: 2025/02/17 23:20:25 by kaisobe          ###   ########.fr       */
+/*   Updated: 2025/02/19 16:45:43 by kaisobe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ void	print_log(t_philosopher *philosopher, char *msg)
 {
 	double	passed;
 
+	pthread_mutex_lock(&philosopher->info->print_mutex);
 	passed = get_passed_time(philosopher->start_time);
 	printf("%d %d %s", (int)passed, philosopher->id, msg);
+	pthread_mutex_unlock(&philosopher->info->print_mutex);
 	return ;
 }
 
@@ -42,20 +44,21 @@ void	print_philosopher(t_philosopher *philosopher)
 		printf("philosopher is null\n");
 		return ;
 	}
+	if (philosopher->info->n_philosophers == 1)
+	{
+		printf("[id: 1] <fork: 1>\n");
+		return ;
+	}
 	printf("[id: %d] <fork: %d> [id: %d] <fork: %d> [id: %d]\n",
 		philosopher->left_person->id, philosopher->left_fork->id,
 		philosopher->id, philosopher->right_fork->id,
 		philosopher->right_person->id);
-	if (philosopher->status == DEAD)
-		printf("dead\n");
 	if (philosopher->status == EATING)
 		printf("eating\n");
 	if (philosopher->status == SLEEPING)
 		printf("sleeping\n");
 	if (philosopher->status == THINKING)
 		printf("thinking\n");
-	if (philosopher->status == WAITING)
-		printf("waiting\n");
 	printf("\n");
 	return ;
 }

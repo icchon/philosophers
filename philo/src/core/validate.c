@@ -6,7 +6,7 @@
 /*   By: kaisobe <kaisobe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 22:39:14 by kaisobe           #+#    #+#             */
-/*   Updated: 2025/02/17 22:39:22 by kaisobe          ###   ########.fr       */
+/*   Updated: 2025/02/19 16:34:31 by kaisobe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	is_positive(char *s)
 		return (0);
 	}
 	n = ft_atoi(s);
-	if (n <= 0)
+	if (n < 0)
 	{
 		return (0);
 	}
@@ -37,6 +37,8 @@ int	is_valid_arg(int argc, char *argv[])
 		return (0);
 	}
 	i = 1;
+	if (ft_atoi(argv[i]) == 0)
+		return (0);
 	while (i < argc)
 	{
 		if (!is_positive(argv[i]))

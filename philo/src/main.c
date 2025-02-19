@@ -6,7 +6,7 @@
 /*   By: kaisobe <kaisobe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 06:29:40 by kaisobe           #+#    #+#             */
-/*   Updated: 2025/02/19 06:44:51 by kaisobe          ###   ########.fr       */
+/*   Updated: 2025/02/19 16:54:37 by kaisobe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char *argv[])
 	info = new_info(argc, argv);
 	if (!info)
 		return (EXIT_FAILURE);
-	philosophers = new_philosophers(*info);
+	philosophers = new_philosophers(info);
 	simulate(philosophers);
 	free_philosophers(philosophers);
 	free_info(info);

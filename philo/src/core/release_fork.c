@@ -6,7 +6,7 @@
 /*   By: kaisobe <kaisobe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 21:08:38 by kaisobe           #+#    #+#             */
-/*   Updated: 2025/02/17 22:38:14 by kaisobe          ###   ########.fr       */
+/*   Updated: 2025/02/19 14:05:12 by kaisobe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 
 static void	release_left_fork(t_philosopher *philosopher)
 {
-	philosopher->status = WAITING;
 	pthread_mutex_unlock(&philosopher->left_fork->mutex);
 	return ;
 }
@@ -35,7 +34,6 @@ static void	release_left_fork(t_philosopher *philosopher)
 
 static void	release_right_fork(t_philosopher *philosopher)
 {
-	philosopher->status = WAITING;
 	pthread_mutex_unlock(&philosopher->right_fork->mutex);
 	return ;
 }

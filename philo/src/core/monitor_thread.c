@@ -6,11 +6,27 @@
 /*   By: kaisobe <kaisobe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:56:30 by kaisobe           #+#    #+#             */
-/*   Updated: 2025/02/17 23:18:16 by kaisobe          ###   ########.fr       */
+/*   Updated: 2025/02/19 18:46:40 by kaisobe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	stand_all_exit_flg(t_philosopher *philosophers)
+{
+	int				id;
+	t_philosopher	*philosopher;
+
+	id = 1;
+	while (id <= philosophers->info->n_philosophers)
+	{
+		philosopher = get_philosopher(philosophers, id++);
+		pthread_mutex_lock(&philosopher->exit_flg_mutex);
+		philosopher->exit_flg = 1;
+		pthread_mutex_unlock(&philosopher->exit_flg_mutex);
+	}
+	return ;
+}
 
 void	*monitor_thread(void *arg)
 {
@@ -21,16 +37,16 @@ void	*monitor_thread(void *arg)
 	philosopher = get_philosopher(philosophers, 1);
 	while (1)
 	{
-		if (is_dead(philosopher))
+		if (is_all_full_stomach(philosophers))
 		{
-			usleep(1000 * 5);
-			print_log(philosopher, "is dead\n");
+			stand_all_exit_flg(philosophers);
+			// print_log(philosopher, "all philosophers are satisfied\n");
 			return (NULL);
 		}
-		if (is_full_stomach(philosopher))
+		if (is_any_dead(philosopher))
 		{
-			usleep(1000 * 5);
-			print_log(philosopher, "all philosophers are satisfied\n");
+			stand_all_exit_flg(philosophers);
+			print_log(philosopher, "died\n");
 			return (NULL);
 		}
 		philosopher = philosopher->right_person;

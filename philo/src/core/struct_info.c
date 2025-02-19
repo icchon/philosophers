@@ -6,7 +6,7 @@
 /*   By: kaisobe <kaisobe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:58:55 by kaisobe           #+#    #+#             */
-/*   Updated: 2025/02/17 21:19:33 by kaisobe          ###   ########.fr       */
+/*   Updated: 2025/02/19 16:29:42 by kaisobe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	set_info(t_info *info, int argc, char *argv[])
 	info->time_to_eat = ft_atoi(argv[3]);
 	info->time_to_sleep = ft_atoi(argv[4]);
 	info->n_must_eat = INT_MAX;
+	pthread_mutex_init(&info->print_mutex, NULL);
 	if (argc == 6)
 	{
 		info->must_eat_flg = 1;
@@ -43,5 +44,6 @@ t_info	*new_info(int argc, char *argv[])
 
 void	free_info(t_info *info)
 {
+	pthread_mutex_destroy(&info->print_mutex);
 	free(info);
 }
